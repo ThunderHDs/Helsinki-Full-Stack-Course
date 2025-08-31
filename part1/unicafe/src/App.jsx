@@ -17,36 +17,46 @@ const App = () => {
     setBad(bad + 1);
   }
 
-  //Statistics Showing Function
-  const showStatistics = () => {
-    return (good === 0 && neutral === 0 && bad === 0)? true : false;
-  }
-
+//App Child Components
   //Statistics Component
   const Statistics = (props) => {
-    if (showStatistics()) {
+    if (good === 0 && neutral === 0 && bad === 0) {
       return (<>
         <p>No feedback given</p>
       </>)
     }else{
       return (<>
-        <p>good {props.good}</p>
-        <p>neutral {props.neutral}</p>
-        <p>bad {props.bad}</p>
-        <p>all {props.good + props.neutral + props.bad}</p>
-        <p>Average {(props.good-props.bad)/(props.good+props.neutral+props.bad)}</p>
-        <p>Positive Feedback {props.good/(props.good+props.neutral+props.bad)*100} %</p>
+        <StatisticLine text="good" value={props.good} />
+        <StatisticLine text="neutral" value={props.neutral} />
+        <StatisticLine text="bad" value={props.bad} />
+        <StatisticLine text="all" value={props.good + props.neutral + props.bad} />
+        <StatisticLine text="Average" value={(props.good-props.bad)/(props.good+props.neutral+props.bad)} />
+        <StatisticLine text="Positive Feedback" value={props.good/(props.good+props.neutral+props.bad)*100} />
       </>)
     }
   }
 
+  //Buttons component
+  const Button = (props) => (
+    <button onClick={props.handleClick}>
+      {props.text}
+    </button>
+  )
+
+  //Statistic Line Component
+  const StatisticLine = (props) => (
+    <>
+      <p>{props.text}: {props.value}</p>
+    </>
+  )
+  //Main App Return
   return (
     <div>
       {/* Input section */}
       <h1>Give feedback</h1>
-      <button onClick={handleGoodClick}>good</button>
-      <button onClick={handleNeutralClick}>neutral</button>
-      <button onClick={handleBadClick}>bad</button>
+      <Button handleClick={handleGoodClick} text="good" />
+      <Button handleClick={handleNeutralClick} text="neutral" />
+      <Button handleClick={handleBadClick} text="bad" />
       {/* Statistics section */}
       <h1>Statistics</h1>
       <Statistics good={good} neutral={neutral} bad={bad} />
