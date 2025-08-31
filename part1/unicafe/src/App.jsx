@@ -26,12 +26,34 @@ const App = () => {
       </>)
     }else{
       return (<>
-        <StatisticLine text="good" value={props.good} />
-        <StatisticLine text="neutral" value={props.neutral} />
-        <StatisticLine text="bad" value={props.bad} />
-        <StatisticLine text="all" value={props.good + props.neutral + props.bad} />
-        <StatisticLine text="Average" value={(props.good-props.bad)/(props.good+props.neutral+props.bad)} />
-        <StatisticLine text="Positive Feedback" value={props.good/(props.good+props.neutral+props.bad)*100} />
+        <table>
+          <tbody>
+            <tr>
+              <td>good</td>
+              <td><StatisticLine value={props.good} /></td>
+            </tr>
+            <tr>
+              <td>neutral</td>
+              <td><StatisticLine value={props.neutral} /></td>
+            </tr>
+            <tr>
+              <td>bad</td>
+              <td><StatisticLine value={props.bad} /></td>
+            </tr>
+            <tr>
+              <td>all</td>
+              <td><StatisticLine value={props.good + props.neutral + props.bad} /></td>
+            </tr>
+            <tr>
+              <td>average</td>
+              <td><StatisticLine value={(props.good-props.bad)/(props.good+props.neutral+props.bad)} /></td>
+            </tr>
+            <tr>
+              <td>positive</td>
+              <td><StatisticLine value={props.good/(props.good+props.neutral+props.bad)*100} /></td>
+            </tr>
+          </tbody>
+        </table>
       </>)
     }
   }
@@ -46,7 +68,7 @@ const App = () => {
   //Statistic Line Component
   const StatisticLine = (props) => (
     <>
-      <p>{props.text}: {props.value}</p>
+    <p>{props.value}</p>
     </>
   )
   //Main App Return
