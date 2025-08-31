@@ -17,27 +17,38 @@ const App = () => {
     setBad(bad + 1);
   }
 
+  //Statistics Showing Function
+  const showStatistics = () => {
+    return (good === 0 && neutral === 0 && bad === 0)? true : false;
+  }
+
   //Statistics Component
   const Statistics = (props) => {
-    return (<>
-      <h1>statistics</h1>
+    if (showStatistics()) {
+      return (<>
+        <p>No feedback given</p>
+      </>)
+    }else{
+      return (<>
         <p>good {props.good}</p>
         <p>neutral {props.neutral}</p>
-      <p>bad {props.bad}</p>
-      <p>all {props.good + props.neutral + props.bad}</p>
-      <p>Average {(props.good-props.bad)/(props.good+props.neutral+props.bad)}</p>
-      <p>Positive Feedback {props.good/(props.good+props.neutral+props.bad)*100} %</p>
-    </>)
+        <p>bad {props.bad}</p>
+        <p>all {props.good + props.neutral + props.bad}</p>
+        <p>Average {(props.good-props.bad)/(props.good+props.neutral+props.bad)}</p>
+        <p>Positive Feedback {props.good/(props.good+props.neutral+props.bad)*100} %</p>
+      </>)
+    }
   }
 
   return (
     <div>
       {/* Input section */}
-      <h1>give feedback</h1>
+      <h1>Give feedback</h1>
       <button onClick={handleGoodClick}>good</button>
       <button onClick={handleNeutralClick}>neutral</button>
       <button onClick={handleBadClick}>bad</button>
       {/* Statistics section */}
+      <h1>Statistics</h1>
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
