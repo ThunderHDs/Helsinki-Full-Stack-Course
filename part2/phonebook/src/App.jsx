@@ -12,17 +12,15 @@ const App = () => {
   const [filter, setFilter] = useState(''); //State to get the filter name
   
   //Effect to fetch data from server
-  const hook = () => {
-  console.log('effect')
-  axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      console.log('promise fulfilled')
-      setPersons(response.data)
-    })
-  }
-
-  useEffect(hook, []);
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }, []);
 
 
   //Creating the new array of persons based on the filter applied, if the input is empty, it shows all
@@ -38,11 +36,12 @@ const App = () => {
       //if contact is new, we create a new contact object
       const personObject = {
         name: newName,
-        number: newNumber,
-        key: String(persons.length + 1)
+        number: newNumber
       }
-      //then we save the new contact and reset the name and number states
-      setPersons(persons.concat(personObject));
+      //then we save the new contact in the server and reset the name and number states
+      axios
+      .post('http://localhost:3001/persons',personObject)
+      .then(response=>setPersons(persons.concat(response.data)))
       setNewName('');
       setNewNumber('');
     } else {

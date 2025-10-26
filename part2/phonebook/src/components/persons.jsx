@@ -4,7 +4,7 @@ const Persons = ({newPersons}) => {
     return (
         <ul>
           {newPersons.map(person=> 
-            <Person key={person.key} name={person.name} number={person.number}/>
+            <Person key={person.id} name={person.name} number={person.number}/>
           )}
         </ul>
     )
