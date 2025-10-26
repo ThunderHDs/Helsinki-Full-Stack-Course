@@ -1,20 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Persons from './components/persons.jsx';
 import Filter from './components/filter.jsx';
 import PersonForm from './components/personForm.jsx';
 
 const App = () => {
   //Main states
-  const [persons, setPersons] = useState([ //Person states for storing the data
-    { name: 'Arto Hellas', number: '040-123456', key: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', key: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', key: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', key: 4 }
-  ]);
+  const [persons, setPersons] = useState([]); //Initial state now is empty, we get the data from the json server
   const [newName, setNewName] = useState(''); //State to get the new contact name
   const [newNumber, setNewNumber] = useState(''); //State to get the new contact number
   const [filter, setFilter] = useState(''); //State to get the filter name
   
+  //Effect to fetch data from server
+  const hook = () => {
+  console.log('effect')
+  axios
+    .get('http://localhost:3001/persons')
+    .then(response => {
+      console.log('promise fulfilled')
+      setPersons(response.data)
+    })
+  }
+
+  useEffect(hook, []);
+
+
   //Creating the new array of persons based on the filter applied, if the input is empty, it shows all
   const newPersons = persons.filter(person=>person.name.includes(filter));
 
