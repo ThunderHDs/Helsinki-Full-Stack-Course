@@ -62,6 +62,25 @@ const App = () => {
     setFilter(event.target.value);
   };
 
+  const handleDelete = (id, name) => {
+    const confirmed = confirm(`Do you really want to delete the contact ${name}`);
+    if (confirmed){
+      console.log(`the user is ${name} with id ${id}`);
+      personService
+      .deleteUser(id)
+      .then(()=>{
+        setPersons(persons.filter(person=>person.id!==id))
+      })
+      .catch(error=> {
+        alert(
+          `${error} the contact '${id}' was already deleted from server`
+        )
+        setPersons(persons.filter(person=>person.id!==id))
+      })
+    }
+    console.log('the user says ',confirmed);
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -76,7 +95,7 @@ const App = () => {
         />
       <h2>Numbers</h2>
       <div>
-        <Persons newPersons={newPersons}/>
+        <Persons newPersons={newPersons} handleDelete={handleDelete}/>
       </div>
     </div>
   )
