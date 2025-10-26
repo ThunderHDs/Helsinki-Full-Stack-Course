@@ -3,19 +3,16 @@
     {
       "name": "Arto Hellas",
       "number": "040-123456",
-      "key": "1",
       "id": "d90d"
     },
     {
       "name": "Dan Abramov",
       "number": "12-43-234345",
-      "key": "3",
       "id": "7bce"
     },
     {
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
-      "key": "4",
       "id": "3514"
     },
     {
@@ -26,7 +23,7 @@
     {
       "id": "4433",
       "name": "javid",
-      "number": "1242343"
+      "number": "345"
     }
   ]
 }

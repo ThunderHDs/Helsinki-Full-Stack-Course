@@ -45,10 +45,35 @@ const App = () => {
       setNewName('');
       setNewNumber('');
     } else {
-      alert(`${newName} is already added to phonebook`);
+      //if the person already exists in the data, we ask confirm changing the number
+      const confirmed = confirm(`${newName} is already added to phonebook, replace the old number with a new one?`);
+      if (confirmed) { //if its confirmed, we obtain the index in the actual data to obtain the id
+        const index = persons.findIndex((person)=>person.name===newName);
+        changeNumber(newNumber, index); //then we call the changing number function
+      }
     }
   };
 
+  //function to changing number
+  const changeNumber = (newNumber, index) => {
+    //obtainin the data based on the index provided
+    const person = persons[index];
+    const id = person.id;
+    const changedPerson = {...person, number: newNumber}
+
+    personService //calling the put request to change de number and reloading the page with the new changes
+    .update(id,changedPerson)
+    .then(returnedPerson => {
+      setPersons(persons.map(person=>person.id===id ? returnedPerson : person))
+    })
+    .catch(error=> {
+        alert(
+          `${error} the contact '${id}' was already deleted from server`
+        )
+        setPersons(persons.filter(person=>person.id!==id))
+      })
+    
+  }
   //Change handlers
   const handleNewName = (event) => {
     setNewName(event.target.value);
