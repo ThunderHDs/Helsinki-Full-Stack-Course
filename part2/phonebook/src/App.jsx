@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import personService from './services/persons.js'
 import Persons from './components/persons.jsx';
 import Filter from './components/filter.jsx';
 import PersonForm from './components/personForm.jsx';
@@ -14,11 +14,11 @@ const App = () => {
   //Effect to fetch data from server
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
+    personService
+    .getAll()
+      .then(allPersons => {
         console.log('promise fulfilled')
-        setPersons(response.data)
+        setPersons(allPersons)
       })
   }, []);
 
@@ -39,9 +39,9 @@ const App = () => {
         number: newNumber
       }
       //then we save the new contact in the server and reset the name and number states
-      axios
-      .post('http://localhost:3001/persons',personObject)
-      .then(response=>setPersons(persons.concat(response.data)))
+      personService
+      .create(personObject)
+      .then(person=>setPersons(persons.concat(person)))
       setNewName('');
       setNewNumber('');
     } else {
