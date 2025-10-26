@@ -45,6 +45,7 @@ const App = () => {
       personService
       .create(personObject)
       .then(person=>setPersons(persons.concat(person)))
+      setError(false);
       setMessageNotificacion(`Added ${personObject.name}`);
       setNewName('');
       setNewNumber('');
@@ -69,13 +70,13 @@ const App = () => {
     .update(id,changedPerson)
     .then(returnedPerson => {
       setPersons(persons.map(person=>person.id===id ? returnedPerson : person))
+      setError(false);
       setMessageNotificacion(`Updated ${person.name} number!`);
     })
     .catch(error=> {
-        alert(
-          `${error} the contact '${id}' was already deleted from server`
-        )
-        setPersons(persons.filter(person=>person.id!==id))
+      setError(true);
+      setMessageNotificacion(`the contact '${person.name}' was already deleted from server`);
+      setPersons(persons.filter(person=>person.id!==id))
       })
     
   }
@@ -85,7 +86,7 @@ const App = () => {
     setNotMessage(message);
     setTimeout(()=>{
       setNotMessage(null)
-    }, 3000)
+    }, 5000)
   }
   //Change handlers
   const handleNewName = (event) => {
