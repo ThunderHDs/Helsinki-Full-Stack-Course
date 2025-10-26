@@ -45,12 +45,7 @@ const App = () => {
       personService
       .create(personObject)
       .then(person=>setPersons(persons.concat(person)))
-      setNotMessage(
-        `Added ${personObject.name}`
-      );
-      setTimeout(()=>{
-          setNotMessage(null)
-        }, 3000)
+      setMessageNotificacion(`Added ${personObject.name}`);
       setNewName('');
       setNewNumber('');
     } else {
@@ -74,6 +69,7 @@ const App = () => {
     .update(id,changedPerson)
     .then(returnedPerson => {
       setPersons(persons.map(person=>person.id===id ? returnedPerson : person))
+      setMessageNotificacion(`Updated ${person.name} number!`);
     })
     .catch(error=> {
         alert(
@@ -82,6 +78,14 @@ const App = () => {
         setPersons(persons.filter(person=>person.id!==id))
       })
     
+  }
+
+  //function to set notif message
+  const setMessageNotificacion = (message) => {
+    setNotMessage(message);
+    setTimeout(()=>{
+      setNotMessage(null)
+    }, 3000)
   }
   //Change handlers
   const handleNewName = (event) => {
