@@ -1,6 +1,11 @@
-const Countries = ({countries}) => { 
-    console.log('Countries received:', countries);
+import {useState} from 'react'
 
+const Countries = ({countries, setCountry}) => { 
+
+    const handleChangeInfo = (country) => { // Handling specific views for some contries
+        setCountry(country)
+        console.log('Country selected ', country);
+    }
 
     if(countries.length > 10) { //validating if there's to many matches
         return(
@@ -43,6 +48,7 @@ const Countries = ({countries}) => {
                     return (
                         <li key={country.name.common}>
                             {country.name.common}
+                            <button onClick={()=> handleChangeInfo(country.name.common)}>Show</button> {/* Button for showing the single view of that country*/}
                         </li>
                     );
                 })}

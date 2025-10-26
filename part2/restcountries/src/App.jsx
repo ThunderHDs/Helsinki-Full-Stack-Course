@@ -38,7 +38,7 @@ function App() {
         <input value={country} onChange={findCountry}/>
       </div>
       <ul>
-        <Countries countries={filteredCountries} /> 
+        <Countries countries={filteredCountries} setCountry={setCountry}/> 
       </ul>
     </>
   )
