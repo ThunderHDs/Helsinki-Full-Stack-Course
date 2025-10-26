@@ -3,6 +3,7 @@ import personService from './services/persons.js'
 import Persons from './components/persons.jsx';
 import Filter from './components/filter.jsx';
 import PersonForm from './components/personForm.jsx';
+import Notification from './components/notification.jsx';
 
 const App = () => {
   //Main states
@@ -10,6 +11,8 @@ const App = () => {
   const [newName, setNewName] = useState(''); //State to get the new contact name
   const [newNumber, setNewNumber] = useState(''); //State to get the new contact number
   const [filter, setFilter] = useState(''); //State to get the filter name
+  const [notMessage, setNotMessage] = useState(null); //Notifications
+  const [error, setError] = useState(false);
   
   //Effect to fetch data from server
   useEffect(() => {
@@ -42,6 +45,12 @@ const App = () => {
       personService
       .create(personObject)
       .then(person=>setPersons(persons.concat(person)))
+      setNotMessage(
+        `Added ${personObject.name}`
+      );
+      setTimeout(()=>{
+          setNotMessage(null)
+        }, 3000)
       setNewName('');
       setNewNumber('');
     } else {
@@ -109,6 +118,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification  message={notMessage} error={error}/>
       <Filter filter={filter} handler={handleFilterChange}/>
       <div>debug: {filter}</div>
       <PersonForm 
